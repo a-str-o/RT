@@ -27,7 +27,7 @@ void			init_sdl(t_all *data)
 		IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) != 0)
 		sdl_error("initialisation SDL");
 	if (!(data->win = SDL_CreateWindow("RT", SDL_WINDOWPOS_CENTERED,
-					SDL_WINDOWPOS_CENTERED, WIN_W, WIN_H, SDL_WINDOW_SHOWN)))
+					SDL_WINDOWPOS_CENTERED, W, H, SDL_WINDOW_SHOWN)))
 		sdl_error("Creation window");
 	if (!(data->rend = SDL_CreateRenderer(data->win, -1,
 					SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)))

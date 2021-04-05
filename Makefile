@@ -29,6 +29,8 @@ SRC		= 	main.c \
 			data_cube.c\
 			sdl.c\
 			raytrace.c\
+			sphere.c\
+			solution.c\
 			
 
 HEADER = 	header/data.h\
@@ -57,7 +59,6 @@ LIBFT_DIR = ./libft
 
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-
 CC = @gcc 
 
 all : $(NAME)
@@ -70,7 +71,7 @@ force:
 
 $(NAME) : $(LIBFT_LIB) $(OBJ)
 	@gcc $(OBJ) $(CFLAGS) -o $(NAME) $(INCLUDE) $(LIB)  $(SDL) $(LIBFT_LIB)
-	@echo "\033[92mDone for RTV1\033[0m"
+	@echo "\033[92mDone for RT\033[0m"
 
 $(OBJ_DIR):
 	@-mkdir $(OBJ_DIR)

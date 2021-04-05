@@ -3,6 +3,7 @@ camera
 	look_at
 	distance
 	focus
+	ambient
 
 sphere
 	texture
@@ -110,8 +111,6 @@ light
 	intensity
 	angle for direct light
 	type (direct / simple)
-	ambient
-
 
 /* refraction index exemple */
 Vacuum 1

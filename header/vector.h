@@ -50,7 +50,7 @@ typedef struct	s_4d_i
 void			normalize(t_vect *v);
 void			zero_vect(t_vect *v);
 void			init_vect(t_vect *v, double x, double y, double z);
-double			get_norm_2(t_vect v);
+double			norm_2(t_vect v);
 double			vect_scal(t_vect v1, t_vect v2);
 t_vect			new_vect(double x, double y, double z);
 t_vect			trans_vect_xyz(t_vect v, t_vect tra);

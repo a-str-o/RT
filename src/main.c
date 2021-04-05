@@ -18,7 +18,7 @@ void			ft_alloc(t_all *data)
 	data->ren = 0;
 	data->aalias = 0;
 	data->deep = 0;
-	data->screen_pixels = (t_vect*)malloc((WIN_W * WIN_H) * sizeof(t_vect));
+	data->screen_pixels = (t_vect*)malloc((W * H) * sizeof(t_vect));
 	data->camera = (t_data_camera*)malloc(sizeof(t_data_camera));
 	ft_alloc_obj(&data->obj);
 	ft_alloc_light(&data->light);
@@ -39,8 +39,8 @@ void			ft_alloc(t_all *data)
 // 	{
 // 		while (i < 4)
 // 		{
-// 			all->start = WIN_W / 4 * i;
-// 			all->end = WIN_H / 4 * i + (WIN_H / 4);
+// 			all->start = W / 4 * i;
+// 			all->end = H / 4 * i + (H / 4);
 // 			ft_memcpy((void *)&data[i], (void *)all, sizeof(t_all));
 // 			pthread_create(&thread_id[i], NULL, raytracing, &data[i]);
 // 			pthread_join(thread_id[i], NULL);

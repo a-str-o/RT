@@ -16,7 +16,7 @@ void		normalize(t_vect *v)
 {
 	double	norm;
 
-	norm = sqrt(get_norm_2(*v));
+	norm = sqrt(norm_2(*v));
 	v->x /= norm;
 	v->y /= norm;
 	v->z /= norm;

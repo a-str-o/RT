@@ -50,7 +50,7 @@ double		vect_scal(t_vect v1, t_vect v2)
 	return (ret);
 }
 
-double		get_norm_2(t_vect v)
+double		norm_2(t_vect v)
 {
 	double ret;
 

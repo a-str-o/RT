@@ -28,6 +28,12 @@
 # include "SDL2/SDL_image.h"
 # include "vector.h"
 # include <math.h>
+
+t_sol			find_solution(double delta, t_vect abc);
+t_obj			*find_close(t_all data, t_ray ray);
+
+t_vect				safe_color(t_vect p);
+t_vect			col_pix(t_all data, t_ray ray);
 void		threading(t_all alll);
 void	cartoon_filter(t_all *rt);
 void			ft_filter_mb(t_all *rt);
@@ -69,11 +75,10 @@ void				ft_free_obj(t_all *data);
 void                init_li(t_light *li, t_data_light *ligth, t_obj *obj, t_ray ray);
 t_vect				light_obj(t_obj *obj,t_all data, t_ray ray, double t);
 t_vect				on_shadow(t_obj *pos, t_all data, t_ray ray, t_vect col);
-t_ray				init_rayy(int i, int j, t_data_camera *cam, double dx,double dy, double dx_aperture, double dy_aperture);
+t_ray		init_rayy(t_2d_i cor, t_data_camera *cam);
 double				find_obj_scnd(t_all data, t_ray ray, t_ray to_light, t_obj *pos);
 double				ft_atof(char *str);
 void				texturing(t_obj *obj);
-t_sol				find_solution(double delta, t_vect abc);
 double				intersection_ray_sphere(t_obj *obj, t_ray r);
 double				intersection_ray_ring(t_obj *obj, t_ray r);
 double				intersection_ray_plan(t_obj *obj, t_ray r);

@@ -75,6 +75,6 @@ int			s_sphere(char **table, int i, t_all *data, t_obj *sphere)
 			sphere->rotation);
 	sphere->position = trans_vect_xyz(sphere->position,
 			sphere->translation);
-	// sphere->inter = &intersection_ray_sphere;
+	 sphere->inter = &intersection_ray_sphere;
 	return (0);
 }
