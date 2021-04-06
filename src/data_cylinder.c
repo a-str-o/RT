@@ -80,7 +80,7 @@ int			s_cylinder(char **table, int i, t_all *data, t_obj *cylinder)
 	cylinder->direction = rot_vect_xyz(cylinder->direction, cylinder->rotation);
 	cylinder->position = trans_vect_xyz(cylinder->position, 
 		cylinder->translation);
-	// cylinder->inter = &intersection_ray_cylindre;
+	// cylinder->inter = &intersection_cylindre;
 	cylinder->half_size = cylinder->size / 2;
 	return (0);
 }

@@ -29,21 +29,13 @@
 # include "vector.h"
 # include <math.h>
 
-t_sol			find_solution(double delta, t_vect abc);
-t_obj			*find_close(t_all data, t_ray ray);
-
+void			init_sdl(t_all *data);
+void			loop_program(t_all *data);
 t_vect				safe_color(t_vect p);
-t_vect			col_pix(t_all data, t_ray ray);
-void		threading(t_all alll);
-void	cartoon_filter(t_all *rt);
-void			ft_filter_mb(t_all *rt);
-void sepia_filtre(t_all *rt);
-void	filtre(t_all *rt);
-void			init_ray(t_ray *r, t_vect origine, t_vect direc);
-int					light_direct(t_all data, t_ray ray);
-t_vect				ft_refraction(t_obj *pos, t_all data, t_ray ray, int nbrbonds);
-t_vect		        ft_reflection(t_obj *pos, t_all data, t_ray ray, int nbrbonds);
-t_vect				rend_pix(t_all data, t_ray ray, int nbrbonds);
+t_sol			find_solution(double delta, t_vect abc);
+
+void		ft_free_obj(t_all *data);
+
 int					ft_val(char *str);
 int					ft_val2(char *str);
 int					ft_camera(char **table, t_all *data);
@@ -70,27 +62,24 @@ void				ft_lstdel(t_obj **alst);
 void				sdl_error(char *message);
 void				ft_alloc_light(t_data_light **light);
 void				ft_alloc_obj(t_obj **obj);
-void			raytracing(t_all	*data);
-void				ft_free_obj(t_all *data);
-void                init_li(t_light *li, t_data_light *ligth, t_obj *obj, t_ray ray);
-t_vect				light_obj(t_obj *obj,t_all data, t_ray ray, double t);
-t_vect				on_shadow(t_obj *pos, t_all data, t_ray ray, t_vect col);
-t_ray		init_rayy(t_2d_i cor, t_data_camera *cam);
-double				find_obj_scnd(t_all data, t_ray ray, t_ray to_light, t_obj *pos);
 double				ft_atof(char *str);
-void				texturing(t_obj *obj);
-double				intersection_ray_sphere(t_obj *obj, t_ray r);
-double				intersection_ray_ring(t_obj *obj, t_ray r);
-double				intersection_ray_plan(t_obj *obj, t_ray r);
-double				intersection_ray_cylindre(t_obj *obj, t_ray r);
-double				intersection_ray_cone(t_obj *cone, t_ray r);
-double				intersection_ray_triangle(t_obj *tri, t_ray r);
-double				intersection_ray_geometry(t_obj *gem, t_ray r);
+
+double				intersection_sphere(t_obj *obj, t_ray r);
+double				intersection_ring(t_obj *obj, t_ray r);
+double				intersection_plan(t_obj *obj, t_ray r);
+double				intersection_cylindre(t_obj *obj, t_ray r);
+double				intersection_cone(t_obj *cone, t_ray r);
+double				intersection_triangle(t_obj *tri, t_ray r);
+double				intersection_geometry(t_obj *gem, t_ray r);
 double				intersection_paraploid(t_obj *para, t_ray r);
 double				intersection_ellipsoid(t_obj *eli, t_ray r);
 double              intersection_cube(t_obj *box, t_ray r);
-t_vect				safe_color(t_vect p);
-
 
 void                sdl_set_text(char *txt, t_vect_i col, t_4d_i rect, t_all *data);
+///////////
+void			raytracing(t_all data);
+void            interface(t_all data);
+
+
+
 #endif

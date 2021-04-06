@@ -82,7 +82,7 @@ int			s_cone(char **table, int i, t_all *data, t_obj *cone)
 			cone->rotation);
 	cone->position = trans_vect_xyz(cone->position,
 			cone->translation);
-	// cone->inter = &intersection_ray_cone;
+	// cone->inter = &intersection_cone;
 	cone->half_size = cone->size / 2;
 	return (0);
 }

@@ -54,25 +54,25 @@ void			loop_program(t_all *data)
 				prog_launched = SDL_FALSE;
 				exit(1);
 			}
-			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r)
-			{
+			// if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_r)
+			// {
 
-				data->ren = 1;
-				SDL_RenderClear(data->rend);
-				raytracing(data);
-			}
-			if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_m)
-			{
-				data->ren = 0;
-				SDL_RenderClear(data->rend);
-				raytracing(data);
-			}
-			if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
-			{
-				SDL_GetMouseState(&(data->event.x), &(data->event.y));
-				SDL_RenderClear(data->rend);
-				raytracing(data);
-			}
+			// 	data->ren = 1;
+			// 	SDL_RenderClear(data->rend);
+			// 	raytracing(data);
+			// }
+			// if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_m)
+			// {
+			// 	data->ren = 0;
+			// 	SDL_RenderClear(data->rend);
+			// 	raytracing(data);
+			// }
+			// if (event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
+			// {
+			// 	SDL_GetMouseState(&(data->event.x), &(data->event.y));
+			// 	SDL_RenderClear(data->rend);
+			// 	raytracing(data);
+			// }
 		}
 
 	}

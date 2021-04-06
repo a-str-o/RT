@@ -77,6 +77,7 @@ typedef struct			s_data_light
 	double				intensity;
 	t_ray				to_light;
 	int					type;
+	double				ambient;
 	double				angle;
 	struct s_data_light	*next;
 }						t_data_light;
@@ -121,6 +122,9 @@ typedef struct			s_obj
 	t_vect				hit;
 	t_vect				norm;
 	t_vect				direction;
+	t_vect				w_dir;
+	t_vect				u_dir;
+	t_vect				v_dir;
 	SDL_Surface			*surface;
 	struct s_obj		*next;
 }						t_obj;

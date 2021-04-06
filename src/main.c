@@ -62,9 +62,7 @@ int			main(int ac, char **av)
 			ft_putendl("error file");
 			return (0);
 		}
-		init_sdl(&data);
-		raytracing(&data);
-		loop_program(&data);
+		interface(data);
 	}
 	else
 		ft_putendl("Usage : ./RT <...> ");

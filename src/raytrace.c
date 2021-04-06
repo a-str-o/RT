@@ -12,37 +12,51 @@
 
 #include "../header/rt.h"
 
-t_ray		init_rayy(t_2d_i cor, t_data_camera *cam)
+t_vect			light_obj(t_obj *obj, t_data_light *light, t_ray ray, double t)
+{
+	t_vect		col;
+	double		diff;
+	double		spec;
+	t_vect		rm;
+
+	rm = norm(sub_vect(light->position, obj->hit));
+	rm = sub_vect(vect_mult_val(obj->norm, 2 * vect_scal(rm, obj->norm)), rm);
+	diff = fmax(0.0, 0.6 * vect_scal(norm(
+					sub_vect(light->position, obj->hit)), obj->norm));
+	spec = 1 * pow(fmax(0.0, vect_scal(rm, norm(
+						sub_vect(ray.or, obj->hit)))), 40);
+	col.x = fmin(255, obj->color.x + light->ambient + light->color.x *
+			diff + light->color.x * spec * light->intensity / (4 * PI *
+				pow(norm_2(sub_vect(light->position, obj->hit)), 2)));
+	col.y = fmin(255, obj->color.y + light->ambient + light->color.y *
+			diff + light->color.y * spec * light->intensity / (4 * PI *
+				pow(norm_2(sub_vect(light->position, obj->hit)), 2)));
+	col.z = fmin(255, obj->color.z + light->ambient + light->color.z * diff +
+			light->color.z * spec * light->intensity / (4 * PI *
+				pow(norm_2(sub_vect(light->position, obj->hit)), 2)));
+	return (col);
+}
+
+void		init_ray(t_ray *r, t_vect origine, t_vect direc)
+{
+	r->or = origine;
+	r->di = direc;
+}
+
+t_ray		init_rayy(int i, int j, t_data_camera *cam)
 {
 	t_vect	s;
 	t_ray	r;
-	t_vect	des;
-	t_vect	new_cam_pos;
-	t_vect var;
-t_2d_d alis;
-t_2d_d deep;
 
 	s = sub_vect(cam->pos, vect_mult_val(cam->dir, cam->dist));
-	s = sub_vect(s, vect_mult_val(cam->u_dir, var.x - (W / 2) + alis.x));
-	s = add_vect(s, vect_mult_val(cam->v_dir, (H / 2) - var.y + alis.y));
+	s = sub_vect(s, vect_mult_val(cam->u_dir, (i - (W / 2))));
+	s = add_vect(s, vect_mult_val(cam->v_dir, ((H / 2) - j)));
 	r.di = sub_vect(s, cam->pos);
+	r.or = cam->pos;
 	normalize(&(r.di));
-	des = add_vect(cam->pos, vect_mult_val(r.di,
-	cam->focus_dis));
-	new_cam_pos = add_vect(cam->pos, (t_vect){deep.x, deep.y, 0.});
-	r.or = new_cam_pos;
-	r.di = norm(sub_vect(des, new_cam_pos));
 	return (r);
 }
-t_vect				safe_color(t_vect p)
-{
-	t_vect	col;
 
-	col.x = fmin(255, p.x);
-	col.y = fmin(255, p.y);
-	col.z = fmin(255, p.z);
-	return (col);
-}
 t_obj			*find_close(t_all data, t_ray ray)
 {
 	t_obj		*pos;
@@ -58,56 +72,54 @@ t_obj			*find_close(t_all data, t_ray ray)
 		t = header->inter(header, ray);
 		if (t != -1)
 		{
-			t1 == -1 ? pos = header : 0;
-			t1 == -1 ? t1 = t : 0;
-			t1 > t ? pos = header : 0;
-			t1 > t ? t1 = t : 0;
+			if (t1 > t || t1 == -1)
+			{
+				pos = header;
+				t1 = t;
+			}
 		}
 		header = header->next;
 	}
 	pos->t = t1;
 	return (pos);
 }
+
 t_vect			col_pix(t_all data, t_ray ray)
 {
 	t_vect		col;
 	t_obj		*pos;
 
+	col = new_vect(100, 100, 100);
 	pos = find_close(data, ray);
 	if (pos->t != -1)
 	{
-		col = pos->color;
+		col = light_obj(pos, data.light, ray, pos->t);
+	// 	col = on_shadow(pos, data, ray, col);
 	}
-	return (safe_color(col));
+	return (col);
 }
-
-void			raytracing(t_all	*data)
+void			raytracing(t_all data)
 {
-	t_2d_i	cor;
-	t_vect	col;
-	t_ray	ray;
+	int			j;
+	int			i;
+	t_ray		ray;
+	t_vect		col;
 
-	cor.i = -1;	
-	while (++cor.i <= H)
+	i = 0;
+	while (i < W)
 	{
-		cor.j = -1;
-		while (++cor.j <= W)
-		{	
-			init_vect(&col, 0., 0., 0.);
-			ray = init_rayy(cor,data->camera);
-			col = col_pix(*data, ray);
+		j = 0;
+		while (j < H)
+		{
+			ray = init_rayy(i, j, data.camera);
+			col = col_pix(data, ray);
+			if (SDL_SetRenderDrawColor(data.rend,
+						col.x, col.y, col.z, 255) != 0)
+				sdl_error("Get color failed");
+			if (SDL_RenderDrawPoint(data.rend, i, j) != 0)
+				sdl_error("draw point failed");
+			j++;
 		}
+		i++;
 	}
-	
-			// 
-			// var.z = -1;
-			// while (++var.z < ((data.aalias || data.deep) ? NBR_RAYS : 1))
-			// {
-			// 	ray = new_ray(var.x, var.y, data);
-			// 	col = add_vect(col, vect_mult_val(rend_pix(data, ray, 6), 1. /
-			// 		((data.aalias || data.deep) ? NBR_RAYS : 1)));
-			// }
-			// set_pixel(data, col, var, ray);
-
-	//filtre(&data);
 }

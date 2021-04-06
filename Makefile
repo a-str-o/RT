@@ -28,6 +28,7 @@ SRC		= 	main.c \
 			data_ellipsoid.c\
 			data_cube.c\
 			sdl.c\
+			interface.c\
 			raytrace.c\
 			sphere.c\
 			solution.c\
@@ -41,7 +42,7 @@ OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
 NAME 	= RT
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror 
 
 INCLUDE	= -I /Users/$$USER/.brew/Cellar/sdl2/2.0.14_1/include \
 	-I /Users/$$USER/.brew/Cellar/sdl2_image/2.0.5/include \
