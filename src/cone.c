@@ -21,10 +21,37 @@ void			hit_norm(t_obj *cone, t_ray r, double t)
 	m = dot_product(r.di, vect_mult_val(cone->direction, t))
 		+ dot_product(sub_vect(r.or, cone->position), cone->direction);
 	cone->hit = add_vect(r.or, vect_mult_val(r.di, t));
-	cone->norm = norm(sub_vect(sub_vect(cone->hit, cone->position)
-				, vect_mult_val(cone->direction, (1 + k + k) * m)));
+	cone->norm = sub_vect(sub_vect(cone->hit, cone->position)
+				, vect_mult_val(cone->direction, (1 + k + k) * m));
 }
+double			limeted_cone(t_obj *cone, t_ray r, t_sol sol)
+{
+	t_vect		up;
+	t_vect		hit;
+	t_vect		hit2;
 
+	up = new_vect(0, 1.0, 0);
+	if (up.x == cone->position.x && up.z == cone->position.z)
+		up = new_vect(0.0001, 1.0001, 0.0001);
+	cone->w_dir = norm(sub_vect(cone->position, cone->direction));
+	cone->u_dir = norm(cross_product(cone->direction, up));
+	cone->v_dir = cross_product(cone->direction, cone->u_dir);
+
+	hit = sub_vect(cone->hit, cone->position);
+	if (hit.y >= cone->position.y + cone->size/2 ||
+		hit.y <= cone->position.y - cone->size/2)
+	{
+		cone->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmax));
+		hit2 = sub_vect(cone->hit, cone->position);
+		cone->norm = norm(vect_mult_val(cone->norm,-1));
+		if (hit2.y >= cone->position.y + cone->size/2 ||
+		hit2.y <= cone->position.y - cone->size/2)
+			return -1;
+		else 
+			return (sol.tmax);
+	}
+	return (sol.tmin);
+}
 double			intersection_cone(t_obj *cone, t_ray r)
 {
 	t_vect		abc;
@@ -33,8 +60,6 @@ double			intersection_cone(t_obj *cone, t_ray r)
 	double		angle;
 	t_sol		sol;
 
-	t_vect		up;
-	t_vect		hit;
 
 	angle = cone->radius * PI / 180;
 	vd = sub_vect(r.or, cone->position);
@@ -54,18 +79,7 @@ double			intersection_cone(t_obj *cone, t_ray r)
 hit_norm(cone, r, sol.tmin);
 
 if (cone->size != 0)
-{
-	up = new_vect(0, 1.0, 0);
-	if (up.x == cone->position.x && up.z == cone->position.z)
-		up = new_vect(0.0001, 1.0001, 0.0001);
-	cone->w_dir = norm(sub_vect(cone->position, cone->direction));
-	cone->u_dir = norm(cross_product(cone->direction, up));
-	cone->v_dir = cross_product(cone->direction, cone->u_dir);
-
-	hit = sub_vect(cone->hit, cone->position);
-	if (hit.y >= cone->position.y + cone->size/2 ||
-		hit.y <= cone->position.y - cone->size/2)
-		return (-1);
-}
+	sol.tmin = limeted_cone(cone, r, sol);
+cone->norm = norm(cone->norm);
 	return (sol.tmin);
 }

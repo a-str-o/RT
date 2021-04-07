@@ -8,9 +8,8 @@ double			intersection_sphere(t_obj *sph, t_ray r)
 	double		delta;
 	t_sol		sol;
 	t_vect		up;
-	t_vect		hit2;
-	t_vect		hit3;
 	t_vect		hit;
+	t_vect		hit2;
 
 	abc.x = norm_2(r.di);
 	abc.y = 2 * dot_product(r.di, sub_vect(r.or, sph->position));
@@ -28,15 +27,20 @@ double			intersection_sphere(t_obj *sph, t_ray r)
 
 
 	sph->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmin));
-	hit2 = sub_vect(sph->hit, sph->position);
-
-	hit = add_vect(r.or, vect_mult_val(r.di, sol.tmax));
-	hit3 = sub_vect(sph->hit, sph->position);
-
-	if (hit2.y >= 0 || hit3.y >= 0)
-		return -1;
-	//sol.tmin = slice_sphere(sph, r, sol);
+	hit = sub_vect(sph->hit, sph->position);
 	sph->norm = norm(sub_vect(sph->hit, sph->position));
+	if (hit.y > sph->size/2)
+	{
+		sph->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmax));
+		hit2 = sub_vect(sph->hit, sph->position);
+		sph->norm = norm(vect_mult_val(sub_vect(sph->hit, sph->position), -1));
+		if (hit2.y >= sph->size/2)
+			return -1;
+		else if (hit2.y <= sph->size/2)
+			return (sol.tmax);
+	}
+	//sol.tmin = slice_sphere(sph, r, sol);
+	
 	
 	return (sol.tmin);
 }
