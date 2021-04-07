@@ -76,6 +76,7 @@ typedef struct			s_data_light
 	t_vect				color;
 	double				intensity;
 	t_ray				to_light;
+	t_vect				norm_light;
 	int					type;
 	double				ambient;
 	double				angle;
@@ -108,6 +109,8 @@ typedef struct			s_obj
 	double				radius;
 	double				t;
 	double				type;
+	t_vect				col;
+	t_vect		col_am;
 	t_vect				text_modif;
 	t_vect				position;
 	t_vect				translation;

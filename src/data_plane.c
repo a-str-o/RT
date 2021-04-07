@@ -78,6 +78,6 @@ int			s_plane(char **table, int i, t_all *data, t_obj *plane)
 			plane->rotation);
 	plane->position = trans_vect_xyz(plane->position, plane->translation);
 	plane->half_size = plane->size / 2;
-	// plane->inter = &intersection_plan;
+	plane->inter = &intersection_plan;
 	return (0);
 }

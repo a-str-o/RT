@@ -16,6 +16,8 @@ void		ft_alloc_obj(t_obj **obj)
 {
 	(*obj) = (t_obj*)malloc(sizeof(t_obj));
 	init_vect(&(*obj)->pos_slice, 0, 0, 0);
+	init_vect(&(*obj)->col, 0, 0, 0);
+	init_vect(&(*obj)->col_am, 0, 0, 0);
 	init_vect(&(*obj)->a, 0, 0, 0);
 	init_vect(&(*obj)->b, 0, 0, 0);
 	init_vect(&(*obj)->c, 0, 0, 0);

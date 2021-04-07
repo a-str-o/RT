@@ -34,7 +34,7 @@ double			intersection_cone(t_obj *cone, t_ray r)
 	t_sol		sol;
 
 	t_vect		up;
-t_vect		hit;
+	t_vect		hit;
 
 	angle = cone->radius * PI / 180;
 	vd = sub_vect(r.or, cone->position);
@@ -51,20 +51,21 @@ t_vect		hit;
 			pow(cos(angle), 2)) - (pow(cp.x, 2) * pow(sin(angle), 2));
 	cp.z = abc.y * abc.y - 4 * abc.x * abc.z;
 	sol = find_solution(cp.z, abc);
+hit_norm(cone, r, sol.tmin);
 
-
+if (cone->size != 0)
+{
 	up = new_vect(0, 1.0, 0);
 	if (up.x == cone->position.x && up.z == cone->position.z)
 		up = new_vect(0.0001, 1.0001, 0.0001);
 	cone->w_dir = norm(sub_vect(cone->position, cone->direction));
 	cone->u_dir = norm(cross_product(cone->direction, up));
 	cone->v_dir = cross_product(cone->direction, cone->u_dir);
-	hit_norm(cone, r, sol.tmin);
-	hit = sub_vect(cone->hit, cone->position);
 
+	hit = sub_vect(cone->hit, cone->position);
 	if (hit.y >= cone->position.y + cone->size/2 ||
 		hit.y <= cone->position.y - cone->size/2)
 		return (-1);
-	
+}
 	return (sol.tmin);
 }
