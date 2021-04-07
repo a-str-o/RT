@@ -13,7 +13,7 @@ double			intersection_sphere(t_obj *sph, t_ray r)
 	t_vect		hit;
 
 	abc.x = norm_2(r.di);
-	abc.y = 2 * vect_scal(r.di, sub_vect(r.or, sph->position));
+	abc.y = 2 * dot_product(r.di, sub_vect(r.or, sph->position));
 	abc.z = norm_2(sub_vect(r.or, sph->position))
 		- (sph->radius * sph->radius);
 	delta = abc.y * abc.y - 4 * abc.x * abc.z;
@@ -23,8 +23,8 @@ double			intersection_sphere(t_obj *sph, t_ray r)
 	if (up.x == sph->position.x && up.z == sph->position.z)
 		up = new_vect(0.0001, 1.0001, 0.0001);
 	sph->w_dir = norm(sub_vect(sph->position, sph->direction));
-	sph->u_dir = norm(vect_cross(sph->direction, up));
-	sph->v_dir = vect_cross(sph->direction, sph->u_dir);
+	sph->u_dir = norm(cross_product(sph->direction, up));
+	sph->v_dir = cross_product(sph->direction, sph->u_dir);
 
 
 	sph->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmin));

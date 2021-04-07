@@ -51,7 +51,7 @@ void			normalize(t_vect *v);
 void			zero_vect(t_vect *v);
 void			init_vect(t_vect *v, double x, double y, double z);
 double			norm_2(t_vect v);
-double			vect_scal(t_vect v1, t_vect v2);
+double			dot_product(t_vect v1, t_vect v2);
 t_vect			new_vect(double x, double y, double z);
 t_vect			trans_vect_xyz(t_vect v, t_vect tra);
 t_vect			add_vect(t_vect v1, t_vect v2);
@@ -61,7 +61,7 @@ t_vect			vect_mult_val(t_vect v, double a);
 t_vect			vect_div_val(t_vect v, double a);
 t_vect			vect_div_val(t_vect v, double a);
 t_vect			norm(t_vect v);
-t_vect			vect_cross(t_vect a, t_vect b);
+t_vect			cross_product(t_vect a, t_vect b);
 t_vect			rot_vect_xyz(t_vect v, t_vect rot);
 
 #endif

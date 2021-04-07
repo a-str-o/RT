@@ -50,8 +50,8 @@ int			s_camera(char **table, int i, t_data_camera *camera)
 	if (up.x == camera->pos.x && up.z == camera->pos.z)
 		up = new_vect(0.0001, 1.0001, 0.0001);
 	camera->dir = norm(sub_vect(camera->pos, camera->dir));
-	camera->u_dir = norm(vect_cross(camera->dir, up));
-	camera->v_dir = vect_cross(camera->dir, camera->u_dir);
+	camera->u_dir = norm(cross_product(camera->dir, up));
+	camera->v_dir = cross_product(camera->dir, camera->u_dir);
 	return (0);
 }
 

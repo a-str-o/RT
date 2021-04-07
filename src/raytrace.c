@@ -20,10 +20,10 @@ t_vect			light_obj(t_obj *obj, t_data_light *light, t_ray ray, double t)
 	t_vect		rm;
 
 	rm = norm(sub_vect(light->position, obj->hit));
-	rm = sub_vect(vect_mult_val(obj->norm, 2 * vect_scal(rm, obj->norm)), rm);
-	diff = fmax(0.0, 0.6 * vect_scal(norm(
+	rm = sub_vect(vect_mult_val(obj->norm, 2 * dot_product(rm, obj->norm)), rm);
+	diff = fmax(0.0, 0.6 * dot_product(norm(
 					sub_vect(light->position, obj->hit)), obj->norm));
-	spec = 1 * pow(fmax(0.0, vect_scal(rm, norm(
+	spec = 1 * pow(fmax(0.0, dot_product(rm, norm(
 						sub_vect(ray.or, obj->hit)))), 40);
 	col.x = fmin(255, obj->color.x + light->ambient + light->color.x *
 			diff + light->color.x * spec * light->intensity / (4 * PI *

@@ -31,7 +31,7 @@ t_vect		norm(t_vect v)
 	return (v1);
 }
 
-t_vect		vect_cross(t_vect a, t_vect b)
+t_vect		cross_product(t_vect a, t_vect b)
 {
 	t_vect	c;
 

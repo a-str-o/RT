@@ -42,7 +42,7 @@ t_vect		vect_div_val(t_vect v, double a)
 	return (v2);
 }
 
-double		vect_scal(t_vect v1, t_vect v2)
+double		dot_product(t_vect v1, t_vect v2)
 {
 	double	ret;
 

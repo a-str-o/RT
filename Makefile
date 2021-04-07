@@ -32,7 +32,9 @@ SRC		= 	main.c \
 			raytrace.c\
 			sphere.c\
 			solution.c\
-			
+			plane.c\
+			cone.c\
+			cylindre.c\
 
 HEADER = 	header/data.h\
 			header/rt.h\
@@ -68,7 +70,6 @@ $(LIBFT_LIB): force
 	@make -C $(LIBFT_DIR)
 
 force:
-
 
 $(NAME) : $(LIBFT_LIB) $(OBJ)
 	@gcc $(OBJ) $(CFLAGS) -o $(NAME) $(INCLUDE) $(LIB)  $(SDL) $(LIBFT_LIB)
