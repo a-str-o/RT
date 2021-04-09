@@ -28,7 +28,8 @@
 # include "SDL2/SDL_image.h"
 # include "vector.h"
 # include <math.h>
-
+t_vect		init_rayy(int i, int j, t_all data);
+void		ft_alloc_cube(t_cube **obj);
 void			init_sdl(t_all *data);
 void			loop_program(t_all *data);
 t_vect				safe_color(t_vect p);
@@ -55,7 +56,7 @@ int					s_cylinder(char **table, int i,t_all *data, t_obj *cyl);
 int					s_triangle(char **table, int i,t_all *data, t_obj *tri);
 int					s_paraploid(char **table, int i, t_all *d, t_obj *par);
 int					s_ellipsoid(char **table, int i, t_all *data, t_obj *el);
-int                 s_cube(char **table, int i, t_all *data, t_obj *cube);
+int                 s_cube(char **table, int i, t_all *data, t_plans **cube);
 void				loop_program(t_all *data);
 void				init_sdl(t_all *data);
 void				ft_lstdel(t_obj **alst);
@@ -74,6 +75,9 @@ double				intersection_geometry(t_obj *gem, t_ray r);
 double				intersection_paraploid(t_obj *para, t_ray r);
 double				intersection_ellipsoid(t_obj *eli, t_ray r);
 double              intersection_cube(t_obj *box, t_ray r);
+
+void        init_plans(t_obj **obj,int k, t_plans *pln, t_all *data);
+
 
 void                sdl_set_text(char *txt, t_vect_i col, t_4d_i rect, t_all *data);
 ///////////

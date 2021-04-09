@@ -12,11 +12,35 @@
 
 #include "../header/rt.h"
 
+double			cly_slice(t_obj *cyl, t_ray r, t_sol sol, t_vect sly)
+{
+	cyl->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmax));
+	if (sol.tmax > 0 && dot_product(sub_vect(cyl->pos_slice, cyl->hit), sly) > 0.0)
+	{
+		cyl->norm = norm(vect_mult_val(sub_vect(sub_vect(cyl->hit, cyl->position),
+			vect_mult_val(cyl->direction, dot_product(cyl->direction,
+					sub_vect(cyl->hit, cyl->position)))), -1));
+		return (sol.tmax);
+	}
+	return (-1);
+}
+
 double			limeted_cly(t_obj *cyl, t_ray r, t_sol sol)
 {
 	t_vect		up;
 	t_vect		hit;
 	t_vect		hit2;
+
+	t_vect	sly;
+	int		is;
+
+	sly = cyl->slice;
+	if (!sly.x && !sly.y && !sly.z)
+		is = 0;
+	else
+		is = 1;
+	if (is == 1 && dot_product(sub_vect(cyl->pos_slice, cyl->hit), sly) < 0.0)
+		return (cly_slice(cyl, r, sol, sly));
 
 	up = new_vect(0, 1.0, 0);
 	if (up.x == cyl->position.x && up.z == cyl->position.z)
@@ -24,6 +48,7 @@ double			limeted_cly(t_obj *cyl, t_ray r, t_sol sol)
 	cyl->w_dir = norm(sub_vect(cyl->position, cyl->direction));
 	cyl->u_dir = norm(cross_product(cyl->direction, up));
 	cyl->v_dir = cross_product(cyl->direction, cyl->u_dir);
+
 	hit = sub_vect(cyl->hit, cyl->position);
 	if (hit.y > cyl->position.y + cyl->size/2 ||
 		hit.y < cyl->position.y - cyl->size/2)
@@ -39,6 +64,7 @@ double			limeted_cly(t_obj *cyl, t_ray r, t_sol sol)
 		else 
 			return (sol.tmax);
 	}
+
 	return (sol.tmin);
 }
 

@@ -1,6 +1,6 @@
 #include "../header/rt.h"
 
-void		f_cube(char **str, int j, t_obj *cube)
+void		f_cube(char **str, int j, t_plans *cube)
 {
 	if (j == 0)
 		init_vect(&cube->position, ft_atof(str[0]),
@@ -21,30 +21,25 @@ void		f_cube(char **str, int j, t_obj *cube)
 		cube->refl = ft_atof(str[0]);
 }
 
-int			s_cube(char **table, int i, t_all *data, t_obj *cube)
+int			s_cube(char **table, int i, t_all *data, t_plans **cube)
 {
 	int		j;
 	char	**str;
 
 	j = 0;
-	cube->name = ft_strdup(table[i - 1]);
-	cube->texture = ft_strdup(table[i]);
-	while (table[++i] && j < 7)
+	(*cube)->name = ft_strdup(table[i - 1]);
+	while (table[i] && j < 7)
 	{
 		str = ft_strsplit(table[i], ' ');
 		if (f_str(str, j, 2) == -1)
 			return (-1);
-		f_cube(str, j, cube);
+		f_cube(str, j, *cube);
 		j++;
+		i++;
 	}
-	data->id++;
-	cube->id = data->id;
-	if (ft_strcmp(cube->texture, ".") != 0)
-		if(!(cube->surface = IMG_Load(cube->texture)))
-			sdl_error("can't load surface");
-	cube->direction = rot_vect_xyz(cube->direction,
-			cube->rotation);
-	cube->position = trans_vect_xyz(cube->position, cube->translation);
-	// cube->inter = &intersection_cube;
+	(*cube)->id = data->id;
+	(*cube)->direction = rot_vect_xyz((*cube)->direction,
+			(*cube)->rotation);
+	(*cube)->position = trans_vect_xyz((*cube)->position, (*cube)->translation);
 	return (0);
 }

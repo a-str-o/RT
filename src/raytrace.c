@@ -107,6 +107,7 @@ t_vect			shadow(t_obj *pos, t_all data, t_ray ray, t_vect col)
 	}
 	return (col);
 }
+
 t_vect			light_obj(t_obj *obj, t_all data, t_ray ray, double t)
 {
 	
@@ -121,20 +122,6 @@ t_vect			light_obj(t_obj *obj, t_all data, t_ray ray, double t)
 	col = li_col(obj, light, ray, t);
 	col = shadow(obj, data, ray, col);
 	return (col);
-}
-
-t_ray		init_rayy(int i, int j, t_data_camera *cam)
-{
-	t_vect	s;
-	t_ray	r;
-
-	s = sub_vect(cam->pos, vect_mult_val(cam->dir, cam->dist));
-	s = sub_vect(s, vect_mult_val(cam->u_dir, (i - (W / 2))));
-	s = add_vect(s, vect_mult_val(cam->v_dir, ((H / 2) - j)));
-	r.di = sub_vect(s, cam->pos);
-	r.or = cam->pos;
-	normalize(&(r.di));
-	return (r);
 }
 
 t_obj			*find_close(t_all data, t_ray ray)
@@ -178,6 +165,22 @@ t_vect			col_pix(t_all data, t_ray ray)
 	}
 	return (col);
 }
+t_vect		init_rayy(int i, int j, t_all data)
+{
+	t_vect	s;
+	t_ray	r;
+	t_data_camera *cam;
+
+	cam = data.camera;
+	s = sub_vect(cam->pos, vect_mult_val(cam->dir, cam->dist));
+	s = sub_vect(s, vect_mult_val(cam->u_dir, (i - (W / 2))));
+	s = add_vect(s, vect_mult_val(cam->v_dir, ((H / 2) - j)));
+	r.di = sub_vect(s, cam->pos);
+	r.or = cam->pos;
+	normalize(&(r.di));
+	return (col_pix(data, r));
+}
+
 void			raytracing(t_all data)
 {
 	int			j;
@@ -191,8 +194,7 @@ void			raytracing(t_all data)
 		j = 0;
 		while (j < H)
 		{
-			ray = init_rayy(i, j, data.camera);
-			col = col_pix(data, ray);
+			col = init_rayy(i, j, data);
 			if (SDL_SetRenderDrawColor(data.rend,
 						col.x, col.y, col.z, 255) != 0)
 				sdl_error("Get color failed");

@@ -95,6 +95,36 @@ typedef struct			s_plg
 	t_faces				*faces;
 }						t_plg;
 
+
+typedef struct			s_plans
+{
+	int					id;
+	char				*name;
+	double				trans;
+	double				refl;
+	double				size;
+	double				half_size;
+	double				radius;
+	double				t;
+	double				type;
+	t_vect				col;
+	t_vect				col_am;
+	t_vect				position;
+	t_vect				translation;
+	t_vect				rotation;
+	t_vect				color;
+	t_vect				axis;
+	t_vect				a;
+	t_vect				b;
+	t_vect				c;
+	t_vect				hit;
+	t_vect				norm;
+	t_vect				direction;
+	t_vect				w_dir;
+	t_vect				u_dir;
+	t_vect				v_dir;
+}							t_plans;
+
 typedef struct			s_obj
 {
 	int					id;
@@ -110,7 +140,7 @@ typedef struct			s_obj
 	double				t;
 	double				type;
 	t_vect				col;
-	t_vect		col_am;
+	t_vect				col_am;
 	t_vect				text_modif;
 	t_vect				position;
 	t_vect				translation;
@@ -131,6 +161,22 @@ typedef struct			s_obj
 	SDL_Surface			*surface;
 	struct s_obj		*next;
 }						t_obj;
+
+typedef struct			s_cube
+{
+	t_obj				pln1;
+	t_obj				pln2;
+	t_obj				pln3;
+	t_obj				pln4;
+	t_obj				pln5;
+	t_obj				pln6;
+	double				t1;
+	double				t2;
+	double				t3;
+	double				t4;
+	double				t5;
+	double				t6;
+}						t_cube;
 
 typedef struct			s_event
 {

@@ -32,29 +32,49 @@ int			ft_objects(t_all *data, int i, char **table, t_obj **obj)
 	if (ft_strcmp("ellipsoid", table[i]) == 0)
 		if (s_ellipsoid(table, i + 1, data, *obj) < 0)
 			return (-1);
-	if (ft_strcmp("cube", table[i]) == 0)
-		if (s_cube(table, i + 1, data, *obj) < 0)
-			return (-1);
 	return (0);
 }
 
 int			ft_obj(char **table, t_all *data)
 {
 	int		i;
+	int		k;
 	t_obj	*obj;
+	t_plans	*pln;
 
 	i = -1;
+	k = 0;
 	obj = data->obj;
 	data->id = 0;
+	pln = (t_plans*)malloc(sizeof(t_plans));
 	while (table[++i])
 	{
+		if (ft_strcmp("cube", table[i]) == 0)
+		{
+			
+				if (s_cube(table, i + 1, data, &pln) < 0)
+					return (-1);
+				data->camera->pos = new_vect(data->camera->pos.x + pln->position.x,
+				data->camera->pos.y + pln->position.y ,  data->camera->pos.z +  pln->position.z);
+				while (k < 6)
+					{
+						data->id++;
+						init_plans(&obj, k, pln, data);
+			
+						if (k+1 == 6)
+							break;
+						ft_alloc_obj(&obj->next);
+						obj = obj->next;
+						k++;
+					}
+				
+			}
 		if (ft_strcmp("cylinder", table[i]) == 0
-				|| ft_strcmp("sphere", table[i]) == 0
-				|| ft_strcmp("cone", table[i]) == 0
-				|| ft_strcmp("plane", table[i]) == 0
-				|| ft_strcmp("ellipsoid", table[i]) == 0
-				|| ft_strcmp("cube", table[i]) == 0
-				|| ft_strcmp("paraploid", table[i]) == 0)
+			|| ft_strcmp("sphere", table[i]) == 0
+			|| ft_strcmp("cone", table[i]) == 0
+			|| ft_strcmp("plane", table[i]) == 0
+			|| ft_strcmp("ellipsoid", table[i]) == 0
+			|| ft_strcmp("paraploid", table[i]) == 0)
 		{
 			if (ft_objects(data, i, table, &obj) < 0)
 				return (-1);

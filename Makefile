@@ -35,6 +35,7 @@ SRC		= 	main.c \
 			plane.c\
 			cone.c\
 			cylindre.c\
+			cube.c\
 
 HEADER = 	header/data.h\
 			header/rt.h\

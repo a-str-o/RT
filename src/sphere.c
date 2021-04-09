@@ -1,6 +1,15 @@
 #include "../header/rt.h"
 
-
+double			sph_slice(t_obj *sph, t_ray r, t_sol sol, t_vect sly)
+{
+	sph->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmax));
+	if (sol.tmax > 0 && dot_product(sub_vect(sph->pos_slice, sph->hit), sly) > 0.0)
+	{
+		sph->norm = norm(vect_mult_val(sub_vect(sph->hit, sph->position), -1));
+		return (sol.tmax);
+	}
+	return (-1);
+}
 
 double			intersection_sphere(t_obj *sph, t_ray r)
 {
@@ -25,20 +34,40 @@ double			intersection_sphere(t_obj *sph, t_ray r)
 	sph->u_dir = norm(cross_product(sph->direction, up));
 	sph->v_dir = cross_product(sph->direction, sph->u_dir);
 
-
-	sph->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmin));
+sph->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmin));
 	hit = sub_vect(sph->hit, sph->position);
 	sph->norm = norm(sub_vect(sph->hit, sph->position));
-	if (hit.y > sph->size/2)
+	t_vect	sly;
+	int		is;
+
+	sly = sph->slice;
+	if (!sly.x && !sly.y && !sly.z)
+		is = 0;
+	else
+		is = 1;
+	if (is == 1 && dot_product(sub_vect(sph->pos_slice, sph->hit), sly) <= 0.0)
 	{
 		sph->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmax));
-		hit2 = sub_vect(sph->hit, sph->position);
-		sph->norm = norm(vect_mult_val(sub_vect(sph->hit, sph->position), -1));
-		if (hit2.y >= sph->size/2)
-			return -1;
-		else if (hit2.y <= sph->size/2)
+		if (sol.tmax > 0 && dot_product(sub_vect(sph->pos_slice, sph->hit), sly) > 0.0)
+		{
+			sph->norm = norm(sub_vect(sph->hit, sph->position));
 			return (sol.tmax);
+		}
+		return (-1);
 	}
+	return (sol.tmin);
+
+	
+	// if (hit.y > sph->size/2)
+	// {
+	// 	sph->hit = add_vect(r.or, vect_mult_val(r.di, sol.tmax));
+	// 	hit2 = sub_vect(sph->hit, sph->position);
+	// 	sph->norm = norm(vect_mult_val(sub_vect(sph->hit, sph->position), -1));
+	// 	if (hit2.y >= sph->size/2)
+	// 		return -1;
+	// 	else if (hit2.y <= sph->size/2)
+	// 		return (sol.tmax);
+	// }
 	//sol.tmin = slice_sphere(sph, r, sol);
 	
 	

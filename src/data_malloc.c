@@ -45,6 +45,11 @@ void		ft_alloc_obj(t_obj **obj)
 	(*obj)->next = NULL;
 }
 
+
+void		ft_alloc_cube(t_cube **obj)
+{
+	(*obj) = (t_cube*)malloc(sizeof(t_cube));
+}
 void		ft_alloc_light(t_data_light **light)
 {
 	(*light) = (t_data_light*)malloc(sizeof(t_data_light));
