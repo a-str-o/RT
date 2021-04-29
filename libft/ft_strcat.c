@@ -3,31 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoelguer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yataji <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/02 12:00:58 by yoelguer          #+#    #+#             */
-/*   Updated: 2019/04/02 12:13:09 by yoelguer         ###   ########.fr       */
+/*   Created: 2019/03/29 19:19:06 by yataji            #+#    #+#             */
+/*   Updated: 2019/03/29 19:40:57 by yataji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_strcat(char *s1, const char *s2)
 {
 	int		i;
 	int		j;
-	char	*p_s2;
 
 	i = 0;
 	j = 0;
-	p_s2 = (char*)s2;
-	while (s1[i] != '\0')
-	{
+	while (s1[i])
 		i++;
-	}
-	while (p_s2[j] != '\0')
+	while (s2[j])
 	{
-		s1[i] = p_s2[j];
-		i++;
+		s1[i] = s2[j];
 		j++;
+		i++;
 	}
 	s1[i] = '\0';
 	return (s1);

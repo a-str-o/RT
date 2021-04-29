@@ -3,52 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoelguer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yataji <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 21:40:48 by yoelguer          #+#    #+#             */
-/*   Updated: 2019/04/18 00:53:26 by yoelguer         ###   ########.fr       */
+/*   Created: 2019/04/14 00:27:51 by yataji            #+#    #+#             */
+/*   Updated: 2019/04/20 17:36:54 by yataji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	char	*ft_print(int i, int p, int c, char *str)
+static char	*ft_itoa2(int n, char *str, int i)
 {
-	while (--i >= 0)
+	char	j;
+
+	if (n == -2147483648)
 	{
-		str[i] = (p % 10) + '0';
-		p /= 10;
-	}
-	if (c < 0)
 		str[0] = '-';
+		str[1] = '2';
+		n = 147483648;
+		while (--i > 1)
+		{
+			j = (n % 10) + 48;
+			n /= 10;
+			if (i != 0 && i != 1)
+				str[i] = j;
+		}
+	}
 	return (str);
 }
 
-char			*ft_itoa(int n)
+static char	*ft_itoa3(int n, char *str, int i, int k)
 {
-	int		i;
-	int		p;
-	int		c;
-	char	*str;
+	char	j;
 
-	i = 1;
-	c = n;
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
 	if (n < 0)
 	{
-		i++;
-		n = -n;
+		str[0] = '-';
+		n *= -1;
 	}
-	p = n;
-	while (n >= 10)
+	while (--i > k)
 	{
-		n = n / 10;
-		i++;
+		j = (n % 10) + 48;
+		n /= 10;
+		str[i] = j;
 	}
-	if (!(str = (char*)malloc((i + 1) * sizeof(char))))
-		return (NULL);
-	str[i] = '\0';
-	ft_print(i, p, c, str);
 	return (str);
+}
+
+char	*ft_itoa(int n)
+{
+	int		i;
+	int		k;
+	char	*str;
+
+	k = 0;
+	i = ft_compt_digit(n);
+	str = (char *)malloc(i + 1);
+	if (str)
+	{
+		str[i] = '\0';
+		if (n >= 0)
+			k = -1;
+		if (n == -2147483648)
+			ft_itoa2(n, str, i);
+		else
+			ft_itoa3(n, str, i, k);
+		return (str);
+	}
+	return (NULL);
 }

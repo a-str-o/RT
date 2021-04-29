@@ -3,43 +3,56 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yoelguer <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: yataji <yataji@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/22 16:14:13 by yoelguer          #+#    #+#              #
-#    Updated: 2020/02/22 15:55:05 by yoelguer         ###   ########.fr        #
+#    Created: 2020/10/20 11:57:48 by yataji            #+#    #+#              #
+#    Updated: 2021/04/25 14:38:09 by yataji           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC		= 	main.c \
-			vector.c\
-			vector2.c\
-			vector3.c\
-			file.c\
-			data_camera.c\
-			data_sphere.c\
-			data_malloc.c\
-			data_plane.c\
-			data_light.c\
-			data_cone.c\
-			data_cylinder.c\
-			ft_atof.c\
-			val.c\
-			data_paraploid.c\
-			data_ellipsoid.c\
-			data_cube.c\
-			sdl.c\
-			interface.c\
-			raytrace.c\
-			sphere.c\
-			solution.c\
-			plane.c\
-			cone.c\
-			cylindre.c\
-			cube.c\
+NAME = RT
 
-HEADER = 	header/data.h\
-			header/rt.h\
-			header/vector.h\
+SRC  =	main.c\
+		math.c\
+		mathnorm.c\
+		tools.c\
+		free.c\
+		sphere.c\
+		cylinder.c\
+		cone.c\
+		draw.c\
+		plane.c\
+		paraploid.c\
+		rotation.c\
+		sdl.c\
+		parse.c\
+		camera.c\
+		camerap.c\
+		lights.c\
+		obj_cone.c\
+		obj_cylinder.c\
+		obj_plane.c\
+		obj_sphere.c\
+		obj_paraploid.c\
+		parse_check.c\
+		stock.c\
+		init_parce.c\
+		ft_atof.c\
+		texture1.c\
+		texture2.c\
+		filtres.c \
+		filter_mb.c\
+		filter_sepia.c\
+		shading.c\
+		coneinno.c\
+		cylinderinno.c\
+		menu.c\
+		tools_parse.c\
+		parse_stock.c\
+		refl_refr.c\
+
+HEADER = 	includes/rt.h
+
 
 OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 
@@ -47,15 +60,14 @@ NAME 	= RT
 
 CFLAGS = -Wall -Wextra -Werror 
 
-INCLUDE	= -I /Users/$$USER/.brew/Cellar/sdl2/2.0.14_1/include \
+INCLUDE	= -I /Users/$$USER/.brew/Cellar/sdl2/2.0.14_1/include/ \
 	-I /Users/$$USER/.brew/Cellar/sdl2_image/2.0.5/include \
+	-I includes
 
 LIB = -L /Users/$$USER/.brew/Cellar/sdl2/2.0.14_1/lib \
 	-L /Users/$$USER/.brew/Cellar/sdl2_image/2.0.5/lib \
 
 SDL = `sdl2-config --cflags --libs` -lSDL2 -lSDL2_image 
-
-SRC_DIR = ./src
 
 OBJ_DIR = ./obj
 
@@ -65,6 +77,7 @@ LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
 CC = @gcc 
 
+SRC_DIR = ./srcs
 all : $(NAME)
 
 $(LIBFT_LIB): force
@@ -91,6 +104,8 @@ fclean : clean
 	@rm -rf $(NAME)
 
 norme:
-	@norminette $(SRC_DIR)
+	@norminette **/*.c
+	@norminette **/*.h
 
 re : fclean all
+

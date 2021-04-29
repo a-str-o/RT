@@ -3,40 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoelguer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yataji <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/01 10:41:02 by yoelguer          #+#    #+#             */
-/*   Updated: 2019/04/17 03:02:50 by yoelguer         ###   ########.fr       */
+/*   Created: 2019/04/01 01:28:21 by yataji            #+#    #+#             */
+/*   Updated: 2019/04/04 22:28:17 by yataji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *str1, const void *str2, size_t n)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	int				i;
-	unsigned char	*dst;
-	unsigned char	*src;
+	char		*d1;
 
-	i = 0;
-	dst = (unsigned char*)str1;
-	src = (unsigned char*)str2;
-	if (src >= dst)
+	if (src < dst)
 	{
-		while (n--)
+		d1 = (char *)malloc(sizeof(char) * (len));
+		if (d1)
 		{
-			dst[i] = src[i];
-			i++;
+			ft_memcpy((void *)d1, src, len);
+			ft_memcpy(dst, (void *)d1, len);
+			free(d1);
 		}
-		return (dst);
 	}
-	if (dst > src)
-	{
-		while (n--)
-			i++;
-		while (i--)
-			dst[i] = src[i];
-		return (dst);
-	}
-	return (NULL);
+	else
+		ft_memcpy(dst, src, len);
+	return (dst);
 }

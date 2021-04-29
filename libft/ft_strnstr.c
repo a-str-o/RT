@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoelguer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yataji <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/03 21:34:33 by yoelguer          #+#    #+#             */
-/*   Updated: 2019/04/20 02:54:50 by yoelguer         ###   ########.fr       */
+/*   Created: 2019/04/07 21:56:22 by yataji            #+#    #+#             */
+/*   Updated: 2019/04/09 22:33:00 by yataji           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,29 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	len2;
+	size_t	i;
+	size_t	l;
+	size_t	x;
 
-	if (*needle == '\0')
+	i = 0;
+	l = 0;
+	if (needle[l] == '\0')
 		return ((char *)haystack);
-	len2 = ft_strlen(needle);
-	while (*haystack != '\0' && len-- >= len2)
+	while (i < len && haystack[i])
 	{
-		if (*haystack == *needle && ft_memcmp(haystack, needle, len2) == 0)
-			return ((char *)haystack);
-		haystack++;
+		l = 0;
+		if (needle[l] == haystack[i])
+		{
+			x = i;
+			while (needle[l] == haystack[x] && x < len && needle[l])
+			{
+				x++;
+				l++;
+			}
+			if (needle[l] == '\0')
+				return ((char *)haystack + i);
+		}
+		i++;
 	}
 	return (NULL);
 }
